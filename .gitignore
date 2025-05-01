@@ -1,0 +1,17 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Model files (optional – include only if you want to keep them local)
+*.pkl
+
+# IDE/editor settings (optional)
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
