@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Battery RUL Predictor</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { padding: 10px; margin: 5px 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <h1>Battery RUL Predictor</h1>
+  <label for="features">Enter Features (comma-separated):</label>
+  <input type="text" id="features" placeholder="e.g. 0.5, 1.2, 3.4, 0.8" />
+  <button onclick="predict()">Predict RUL</button>
+  <h2 id="result"></h2>
+
+  <script>
+    async function predict() {
+      const input = document.getElementById('features').value;
+      const featureArray = input.split(',').map(Number);
+      
+      const response = await fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ features: featureArray })
+      });
+
+      const data = await response.json();
+      const result = document.getElementById('result');
+
+      if (response.ok) {
+        result.textContent = `Predicted RUL: ${data.predicted_RUL}`;
+      } else {
+        result.textContent = `Error: ${data.error}`;
+      }
+    }
+  </script>
+</body>
+</html>
